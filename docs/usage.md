@@ -13,6 +13,17 @@ CAP LLM Plugin helps developers create tailored Generative AI based CAP applicat
 
 - Set up default permissions for HDI container in your CAP application. In the db section of the CAP application, perform the steps specified in the "how" section of the [blog](https://blogs.sap.com/2022/01/19/modifying-the-default-access_role-in-hdi-containers/).
 
+- Add the cds "cap-llm-plugin" service in the cds requires section of package.json in your CAP application as follows:
+
+```
+    "cds": {
+    "requires": {
+      "cap-llm-plugin": true
+    }
+  }
+```
+
+
 ## **How to use the CAP LLM Plugin for anonymization:**
  
 For information on what anonymization means, please refer to the following link [here](https://help.sap.com/docs/SAP_HANA_PLATFORM/b3ee5778bc2e4a089d3299b82ec762a7/6cf9d55f4d3d45b0bcdb41756d86629f.html).
@@ -94,7 +105,7 @@ This is the `srv` folder in your CAP Application.
 
 In srv, you need to expose the entity as service to use it in the .cds file
 
-To use the anonymized data, in the .js file for the entity as a service, you will need to import the plugin and use function   
+To use the anonymized data, in the .js file for the entity as a service, you will need to connect to the cds "cap-llm-plugin" service and use method   
 
 `getAnonymizedData("<serviceName>.<entityName>", [<optional list of ids>])`  
 
@@ -109,23 +120,23 @@ service EmployeeService @(path:'/browse') {
 }
 ```
 
-Next, in our srv/employee-service.js file we are importing the plugin and then using the getAnonymizeData function to retrieve the Employee entity as defined by the EmployeeService
+Next, in our srv/employee-service.js file we can use the getAnonymizeData method of the cds "cap-llm-plugin" service to retrieve the Employee entity as defined by the EmployeeService
 
 ```
-const { getAnonymizedData } = require('cap-llm-plugin')
-let anonymizedEmployees = await getAnonymizedData("EmployeeService.Employee")
+const anonymizer = await cds.connect.to("cap-llm-plugin");
+let response = await anonymizer.getAnonymizedData("EmployeeService.Employee")
 ```  
 
 To get specific records for the entity, you can do the following. 
 
 This will retrieve the record with id=1.
 ```
-const { getAnonymizedData } = require('cap-llm-plugin')
-let anonymizedEmployees = await getAnonymizedData("EmployeeService.Employee", [1])
+const anonymizer = await cds.connect.to("cap-llm-plugin");
+let response = await anonymizer.getAnonymizedData("EmployeeService.Employee",[1])
 ```  
 
 This will retrieve the record with id=1 or id=2.
 ```
-const { getAnonymizedData } = require('cap-llm-plugin')
-let anonymizedEmployees = await getAnonymizedData("EmployeeService.Employee", [1,2])
+const anonymizer = await cds.connect.to("cap-llm-plugin");
+let response = await anonymizer.getAnonymizedData("EmployeeService.Employee",[1,2])
 ``` 

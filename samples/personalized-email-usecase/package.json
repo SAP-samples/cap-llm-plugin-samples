@@ -1,0 +1,56 @@
+{
+    "name": "emp-gen-anz-project",
+    "version": "1.0.0",
+    "description": "A simple CAP project.",
+    "repository": "<Add your repository here>",
+    "license": "UNLICENSED",
+    "private": true,
+    "dependencies": {
+        "@sap-cloud-sdk/http-client": "*",
+        "@sap-cloud-sdk/resilience": "*",
+        "@sap/cds": "^7",
+        "@sap/cds-hana": "^2",
+        "@sap/hana-client": "^2.18.27",
+        "@sap/xssec": "^3",
+        "cap-llm-plugin" : "*",
+        "express": "^4",
+        "passport": "^0"
+    },
+    "devDependencies": {
+        "@cap-js/sqlite": "^1",
+        "@sap/cds-dk": "^7",
+        "@sap/ux-specification": "^1.120.0",
+        "rimraf": "^3.0.2"
+    },
+    "scripts": {
+        "start": "cds-serve",
+        "watch-emp-gen-anz-module": "cds watch --open emp-gen-anz-module/webapp/index.html?sap-ui-xx-viewCache=false",
+        "undeploy": "cf undeploy emp-gen-anz-project --delete-services --delete-service-keys --delete-service-brokers",
+        "build": "rimraf resources mta_archives && mbt build --mtar archive",
+        "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
+        "watch-emp-proj-test": "cds watch --open emp-proj-test/webapp/index.html?sap-ui-xx-viewCache=false",
+        "watch-emp-gen-anz-ui": "cds watch --open emp-gen-anz-ui/webapp/index.html?sap-ui-xx-viewCache=false"
+    },
+    "cds": {
+        "requires": {
+            "db": "hana",
+            "destinations": true,
+            "cap-llm-plugin": true,
+            "<AI_CORE_DESTINATION_NAME>": {
+                "kind": "rest",
+                "credentials": {
+                    "destination": "<AI_CORE_DESTINATION_NAME>",
+                    "requestTimeout": "300000"
+                }
+            }
+        },
+        "sapux": [
+            "app/emp-gen-anz-module",
+            "app/emp-gen-anz-module"
+        ]
+    },
+    "sapux": [
+        "app/emp-proj-test",
+        "app/emp-gen-anz-ui"
+    ]
+}
