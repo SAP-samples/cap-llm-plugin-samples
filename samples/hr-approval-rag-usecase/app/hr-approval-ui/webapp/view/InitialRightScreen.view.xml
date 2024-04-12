@@ -1,0 +1,57 @@
+<mvc:View 
+    controllerName="hrapprovalui.controller.InitialRightScreen"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.f"
+	displayBlock="true"
+	height="100%"
+	busyIndicatorDelay="0">
+
+    <Page 
+        id="initialRightScreen"
+        showFooter="true"
+        showHeader="false"
+        floatingFooter="true"
+        class="sapUiResponsivePadding--content sapUiResponsivePadding--footer sapUiResponsivePadding--floatingFooter">
+
+        <VBox id="initialRightScreenVBox">
+                <List 
+                    id="initialRightScreenVBoxList"
+                    showSeparators="Inner"
+                    noDataText="How can I help you today ?"
+                    updateFinished=".onListUpdateFinished"
+                    items="{chatModel>/chatHistory/}"
+                    busy="{chatModel>/isBusy}">
+                    <FeedListItem 
+                        id="initialRightScreenListItem"
+                        info="{chatModel>user_role}"
+                        text="{chatModel>content}"
+                        timestamp="{chatModel>message_time}"
+                        icon="{chatModel>icon_path}"
+                        iconInitials="{chatModel>initials}"
+                        showIcon="true">
+                    </FeedListItem>   
+                </List>
+            </VBox>
+
+        <footer>
+            <OverflowToolbar
+                id="initialRightScreenOverflowToolbar"
+                width="100%"
+                height="auto"
+                >
+                <FeedInput
+                    id="initialFeedInput"
+                    showIcon="false"
+                    placeholder="Enter your message...."
+                    growing="true"
+                    post=".onSendMessage"
+                    enabled="{chatModel>/enableTextArea}"
+                >
+                </FeedInput>   
+            </OverflowToolbar>
+        </footer>
+
+    </Page>
+
+</mvc:View>

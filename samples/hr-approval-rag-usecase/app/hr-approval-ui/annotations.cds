@@ -1,0 +1,1 @@
+using ChatService as service from '../../srv/chat-service';

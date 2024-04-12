@@ -1,0 +1,12 @@
+<mvc:View 
+    controllerName="hrapprovalui.controller.App"
+    xmlns:f="sap.f" 
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    displayBlock="true">
+    <App id="app">
+        <f:FlexibleColumnLayout id="flexibleColumnLayout" backgroundDesign="Solid">
+        </f:FlexibleColumnLayout>
+    </App>
+</mvc:View>

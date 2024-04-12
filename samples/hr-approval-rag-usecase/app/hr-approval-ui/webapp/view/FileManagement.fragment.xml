@@ -1,0 +1,150 @@
+<core:FragmentDefinition 
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:m="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m.upload">
+    
+    <m:Dialog 
+        id="fileManagementFragment"
+        title="Manage Files"
+        resizable="true"
+        draggable="true"
+        beforeOpen=".beforeFileManagementDialogOpen">
+
+        <UploadSetwithTable
+            id="uploadSetWithTable"
+            class="sapUiSmallMargin"
+            sticky="ColumnHeaders,HeaderToolbar"
+            mode="SingleSelectLeft"
+            growing="true"
+            growingThreshold="5"
+            growingScrollToLoad="true"
+            width="auto"
+            fixedLayout="false"
+            uploadEnabled="false"
+            uploadButtonInvisible="true"
+            items="{ 
+                path:'files>/Files',
+                parameters: {
+                    $orderby: 'createdAt desc'
+			    },
+			    templateShareable: false
+            }"
+            selectionChange=".onSelectionChange"
+            beforeOpenContextMenu=".onBeforeOpenContextMenu">
+            
+            <!-- ToolBar for UploadSetwithTable -->
+            <headerToolbar>
+                <m:OverflowToolbar 
+                    id="overflowToolBar">
+                    <m:Title
+                        id="overflowToolBarTitle"
+                        text="Files"
+                        level="H2"/>
+                    <m:SearchField
+                        id="overflowToolBarSearchField"
+                        width="20%"
+                        liveChange=".onFileNameSearch">
+                        <m:layoutData>
+                            <m:OverflowToolbarLayoutData
+                                id="overflowToolBarLayOut"
+                                priority="NeverOverflow"
+                            />
+                        </m:layoutData>
+                    </m:SearchField>
+                    <m:ToolbarSpacer id="overflowToolBarSpacer"/>
+                    <m:Button
+                        id="downloadSelectedButton"
+                        text="Download"
+                        enabled="false"
+                        press=".onDownloadFiles"/>
+                    <m:Button
+                        id="deleteSelectedButton"
+                        text="Delete"
+                        enabled="false"
+                        press=".onDeleteFiles"/>
+                    <m:Button
+                        id="deleteEmbeddingSelectedButton"
+                        text="Delete Embeddings"
+                        enabled="true"
+                        press=".onDeleteEmbedding"/>
+                </m:OverflowToolbar>
+            </headerToolbar>
+
+            <!-- Columns for UploadSetwithTable -->
+            <columns>
+                <Column id="fileName" importance="High">
+                    <header>
+                        <m:Label id="labelForFileName" text="File Name" />
+                    </header>
+                </Column>
+                <Column id="id">
+                    <header>
+                        <m:Label id="labelForID" text="ID" />
+                    </header>
+                </Column>
+                <Column id="status">
+                    <header>
+                        <m:Label id="labelForStatus" text="Status" />
+                    </header>
+                </Column>
+                <Column id="fileSize">
+                    <header>
+                        <m:Label id="labelForFileSize" text="File Size" />
+                    </header>
+                </Column>
+                <Column id="actionButton" importance="High" >
+                    <header>
+                        <m:Label id="labelForActionButton" text="Generate Embeddings" />
+                    </header>
+                </Column>
+            </columns>
+
+            <!-- Items aggregation with template UploadSetwithTableItem definition for each row -->
+            <items>
+                <UploadSetwithTableItem
+                    id="uploadSetwithTableItems"
+                    fileName="{files>fileName}"
+                    mediaType="{files>mediaType}"
+                    fileSize="{files>size}">
+
+                    <!-- Cells with cell template defining content for each column (cells and columns work with 1:1 mapping) -->
+                    <cells>
+                        <m:HBox id="hboxForFileName">
+                            <core:Icon
+                                id="FileNameIcon"
+                                src="{parts: ['files>mediaType', 'files>fileName'], formatter: '.getIconSrc' }"
+                                color="white"
+                                visible="true"
+                                class="sapMUSTItemImage sapMUSTItemIcon"
+                            />
+                            <m:VBox id="vboxForFileName" class="sapUiTinyMargin sapUiSmallMarginBegin">
+                                <m:Text id="fileNameText"  text="{files>fileName}" class="sapUiTinyMarginTop" />
+                            </m:VBox>
+                        </m:HBox>
+                        <m:Text id="fileIDText" text="{files>ID}" />
+                        <m:Text id="fileStatusText"  text="Completed" />
+                        <m:Text id="fileSizeText"
+                            text="{path: 'files>size', formatter: '.getFileSizeWithUnits'}"
+                        />
+                        <m:Button
+                            id="trainingButton"
+                            class="sapUiTinyMarginBegin"
+                            type="Transparent"
+                            icon="sap-icon://begin"
+                            press=".onGenerateVectorBtnClick"
+                        />
+                    </cells>
+                </UploadSetwithTableItem>
+            </items>
+        </UploadSetwithTable>
+
+        <m:beginButton>
+            <m:Button
+                id="fileManagementFragCloseBtn"
+                text="Close"
+                press=".onCloseManageFileFragment"/>
+        </m:beginButton> 
+    </m:Dialog>
+
+</core:FragmentDefinition>

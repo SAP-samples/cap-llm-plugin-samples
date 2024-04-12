@@ -1,0 +1,31 @@
+{
+    "cdsc": {
+        "beta": {
+            "vectorType": true
+        }
+    },
+    "requires":{
+        "GENERATIVE_AI_HUB": {
+            "CHAT_MODEL_DESTINATION_NAME": "AICoreAzureOpenAIDestination",
+            "CHAT_MODEL_DEPLOYMENT_URL": "<CHAT_MODEL_DEPLOYMENT_URL> . For example: /v2/inference/deployments/<deployment-id>",
+            "CHAT_MODEL_RESOURCE_GROUP": "<CHAT_MODEL_RESOURCE_GROUP>",
+            "CHAT_MODEL_API_VERSION": "<CHAT_MODEL_API_VERSION>",
+            "EMBEDDING_MODEL_DESTINATION_NAME": "AICoreAzureOpenAIDestination",
+            "EMBEDDING_MODEL_DEPLOYMENT_URL": "<CHAT_MODEL_DEPLOYMENT_URL>. For example: /v2/inference/deployments/<deployment-id>",
+            "EMBEDDING_MODEL_RESOURCE_GROUP": "default",
+            "EMBEDDING_MODEL_API_VERSION": "<EMBEDDING_MODEL_API_VERSION>"
+        },
+        "AICoreAzureOpenAIDestination": {
+            "kind": "rest",
+            "credentials": {
+              "destination": "openai-aicore-api",
+              "requestTimeout": "300000"
+            }
+        },
+        "SUCCESS_FACTORS_CREDENTIALS": {
+            "AUTHORIZATION_HEADER": "<AUTHORIZATION_HEADER>",
+            "USER_ID": "<USER_ID>"
+        }
+    }
+
+}

@@ -1,0 +1,65 @@
+<mvc:View
+    controllerName="hrapprovalui.controller.OfficalRightScreen"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.f"
+	displayBlock="true"
+	height="100%"
+	busyIndicatorDelay="0">
+
+        <Page 
+            id="initialRightScreen"
+            showFooter="true"
+            showHeader="false"
+            floatingFooter="true"
+            class="sapUiResponsivePadding--content sapUiResponsivePadding--footer sapUiResponsivePadding--floatingFooter">
+
+            <VBox 
+                id="officialRightScreenVBox">
+                <List 
+                    id="officialRightScreenVBoxList"
+                    showNoData="false"
+                    showSeparators="Inner"
+                    items="{
+                        path:'chatModel>/chatHistory/',
+                        sorter:{
+                            path:'message_time',
+                            descending: false
+                        }
+                    }"
+                    busy="{chatModel>/isBusy}">
+                    <FeedListItem 
+                        id="_IDGenFeedListItem1"
+                        class="feedListItem"
+                        convertLinksToAnchorTags="All"
+                        info="{chatModel>user_role}"
+                        text="{chatModel>content}"
+                        timestamp="{chatModel>message_time}"
+                        icon="{chatModel>icon_path}"
+                        iconInitials="{chatModel>initials}"
+                        showIcon="true">
+                    </FeedListItem>
+                </List>
+            </VBox>
+    
+        <footer>
+            <OverflowToolbar
+                id="officialRightScreenOverflowToolbar"
+                width="100%"
+                height="auto"
+                >
+                <FeedInput
+                    id="officialFeedInput"
+                    showIcon="false"
+                    placeholder="Enter your message...."
+                    growing="true"
+                    post=".onSendMessage"
+                    enabled="{chatModel>/enableTextArea}"
+                >
+                </FeedInput>   
+            </OverflowToolbar>
+        </footer>
+
+    </Page>
+
+</mvc:View>

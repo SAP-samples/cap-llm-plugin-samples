@@ -1,0 +1,102 @@
+{
+    "name": "hr-approval-rag-usecase",
+    "version": "1.0.0",
+    "description": "A simple CAP project.",
+    "repository": "<Add your repository here>",
+    "license": "UNLICENSED",
+    "private": true,
+    "dependencies": {
+        "@sap-cloud-sdk/http-client": "^3.12.0",
+        "@sap/cds": "^7.6.3",
+        "@sap/cds-compiler": "^4.6.2",
+        "@sap/cds-hana": "^2",
+        "@sap/xssec": "^3",
+        "basic-auth": "^2.0.1",
+        "cap-llm-plugin": "^1.3.0",
+        "cds-swagger-ui-express": "^0.8.0",
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.4",
+        "downloadjs": "^1.4.7",
+        "express": "^4",
+        "langchain": "^0.1.19",
+        "passport": "^0.7.0",
+        "pdf-lib": "^1.17.1",
+        "pdf-parse": "^1.1.1",
+        "pdfkit": "^0.14.0",
+        "uuid": "^9.0.1"
+    },
+    "devDependencies": {
+        "@cap-js/sqlite": "^1",
+        "@sap/cds-dk": "^7",
+        "@sap/ux-specification": "^1.120.4",
+        "rimraf": "^3.0.2"
+    },
+    "scripts": {
+        "start": "cds-serve",
+        "watch-hr-approval-ui": "cds watch --open hr-approval-ui/webapp/index.html?sap-ui-xx-viewCache=false",
+        "undeploy": "cf undeploy hr-approval-rag-usecase --delete-services --delete-service-keys --delete-service-brokers",
+        "build": "rimraf resources mta_archives && mbt build --mtar archive",
+        "deploy": "cf deploy mta_archives/archive.mtar --retries 1"
+    },
+    "cds": {
+        "requires": {
+            "[dev]": {
+                "db": "hana",
+                "cap-llm-plugin": {
+                    "impl": "cap-llm-plugin/srv/cap-llm-plugin.js"
+                },
+                "destinations": true,
+                "jsonplaceholder": {
+                    "kind": "rest",
+                    "credentials": {
+                        "url": "https://jsonplaceholder.typicode.com",
+                        "requestTimeout": 30000
+                    }
+                },
+                "destination_sf": {
+                    "kind": "rest",
+                    "credentials": {
+                        "url": "<your-successfactors-base-url>",
+                        "requestTimeout": 30000
+                    }
+                },
+                "auth": {
+                    "passport": {
+                        "strategy": "mock",
+                        "users": {
+                            "JohnDole@tester.sap.com": {
+                                "ID": "JohnDole@tester.sap.com",
+                                "password": "initial"
+                            }
+                        }
+                    }
+                }
+            },
+            "[production]": {
+                "auth": "xsuaa",
+                "db": "hana",
+                "cap-llm-plugin": {
+                    "impl": "cap-llm-plugin/srv/cap-llm-plugin.js"
+                },
+                "destinations": true,
+                "jsonplaceholder": {
+                    "kind": "rest",
+                    "credentials": {
+                        "url": "https://jsonplaceholder.typicode.com",
+                        "requestTimeout": 30000
+                    }
+                },
+                "destination_sf": {
+                    "kind": "rest",
+                    "credentials": {
+                        "url": "<your-successfactors-base-url>",
+                        "requestTimeout": 30000
+                    }
+                }
+            }
+        },
+        "sapux": [
+            "app/hr-approval-ui"
+        ]
+    }
+}

@@ -1,0 +1,14 @@
+specVersion: "2.5"
+metadata:
+  name: hrapprovalui
+type: application
+framework:
+  name: OpenUI5
+  version: "1.120.7"
+  libraries:
+    - name: sap.m
+    - name: sap.ui.core
+    - name: themelib_sap_horizon
+    - name: sap.f
+    - name: sap.ui.layout
+    - name: sap.ui.unified

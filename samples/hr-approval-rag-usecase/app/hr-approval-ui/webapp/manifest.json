@@ -1,0 +1,180 @@
+{
+  "_version": "1.59.0",
+  "sap.app": {
+    "id": "hrapprovalui",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.12.4",
+      "toolsId": "2f10dee8-63c3-46f0-a270-d704153ff59a"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/odata/v4/chat/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.0"
+        }
+      },
+      "fileService":{
+        "uri": "/odata/v4/embedding-storage/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.0"
+        }
+      }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "Chat-Display": {
+          "semanticObject": "Chat",
+          "action": "Display",
+          "title": "{{flpTitle}}",
+          "subTitle": "{{flpSubtitle}}",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.120.9",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.f": {},
+        "sap.suite.ui.generic.template": {},
+        "sap.ui.comp": {},
+        "sap.ui.generic.app": {},
+        "sap.ui.table": {},
+        "sap.ushell": {},
+        "sap.ui.unified": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "hrapprovalui.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "files":{
+        "dataSource": "fileService",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "rootView": {
+      "viewName": "hrapprovalui.view.App",
+      "type": "XML",
+      "async": true,
+      "id": "App"
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.f.routing.Router",
+        "viewType": "XML",
+        "async": true,
+        "viewPath": "hrapprovalui.view",
+        "controlId": "flexibleColumnLayout",
+        "transition": "slide"
+      },
+      "routes": [
+        {
+          "pattern": "",
+          "name": "home",
+          "target":[
+            "leftScreen",
+            "initialRightScreen"
+          ],
+          "layout": "TwoColumnsMidExpanded"
+        },
+        {
+          "pattern": "conversation/{conversationID}",
+          "name": "conversation",
+          "target":[
+            "leftScreen",
+            "officalRightScreen"
+          ],
+          "layout": "TwoColumnsMidExpanded"
+        }
+      ],
+      "targets": {
+        "leftScreen":{
+          "viewId": "lefeScreenPage",
+          "viewName": "LeftScreen",
+          "controlAggregation": "beginColumnPages"
+        },
+        "initialRightScreen":{
+          "viewId": "initialRightScreen",
+          "viewName": "InitialRightScreen",
+          "controlAggregation": "midColumnPages"
+        },
+        "officalRightScreen":{
+          "viewId": "officalRightScreen",
+          "viewName": "OfficalRightScreen",
+          "controlAggregation": "midColumnPages"
+        }
+      }
+    }
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "hr.app"
+  }
+}
