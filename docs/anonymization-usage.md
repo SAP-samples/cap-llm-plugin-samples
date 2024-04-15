@@ -3,13 +3,14 @@
 CAP LLM Plugin helps developers create tailored Generative AI based CAP applications without exposing confidential data to LLM by anonymizing sensitive data leveraging SAP HANA Cloud Data Anonymization.
 
 ## **Prerequisites**
+
 - Install the CAP LLM plugin in your CAP project using the following npm command:  
 
     `npm install cap-llm-plugin`
 
 - You will need SAP HANA Cloud attached to your CAP application already. Refer [here](https://developers.sap.com/group.hana-cloud-cap-setup.html).
 
-- A cloud foundry enviornment to deploy your CAP application to. Refer [here](https://help.sap.com/docs/DIGITALPAYMENTS/a5c364402f8d4c0b99f6a4c7de385a56/223db7192df44425b66bba122110779b.html) to enable Cloud Foundry in your SAP BTP subaccount.
+- A cloud foundry environment to deploy your CAP application to. Refer [here](https://help.sap.com/docs/DIGITALPAYMENTS/a5c364402f8d4c0b99f6a4c7de385a56/223db7192df44425b66bba122110779b.html) to enable Cloud Foundry in your SAP BTP subaccount.
 
 - Set up default permissions for HDI container in your CAP application. In the db section of the CAP application, perform the steps specified in the "how" section of the [blog](https://blogs.sap.com/2022/01/19/modifying-the-default-access_role-in-hdi-containers/).
 
