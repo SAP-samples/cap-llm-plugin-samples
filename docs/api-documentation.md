@@ -71,7 +71,7 @@ The config(for all the methods that require a config parameter) would be a json 
 ```
 const vectorplugin = await cds.connect.to("cap-llm-plugin");
 const embeddingModelConfig = cds.env.requires["gen-ai-hub"]["text-embedding-ada-002"];
-const embeddingGenResp = await vectorplugin.getEmbedding(embeddingModelConfig, user_query);
+const embeddingGenResp = await vectorplugin.getEmbeddingWithConfig(embeddingModelConfig, user_query);
 const vector_embedding = embeddingGenResp?.data[0]?.embedding;
 ```
 
@@ -164,7 +164,7 @@ Some chat models require mandatory chat parameters in the payload to be passed. 
 
 const chatModelConfig = cds.env.requires["gen-ai-hub"][{modelType like gemini-1.0-pro | anthropic--claude-3-sonnet | gpt-4 }];
 const vectorplugin = await cds.connect.to("cap-llm-plugin");
-let result = await vectorplugin.getChatCompletion(chatModelConfig, payload);
+let result = await vectorplugin.getChatCompletionWithConfig(chatModelConfig, payload);
 
 ```
 
