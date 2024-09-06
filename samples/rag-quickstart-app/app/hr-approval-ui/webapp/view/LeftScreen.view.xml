@@ -1,0 +1,84 @@
+<mvc:View xmlns:tnt="sap.tnt"
+    controllerName="hrapprovalui.controller.LeftScreen"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.f"
+    xmlns:m="sap.m"
+    height="100%"
+    displayBlock="true"
+>
+    <m:Page
+        id="lefeScreenPage"
+        showHeader="false"
+        showFooter="false">
+
+        <!-- Left Screen Page Content-->
+        <m:content>
+
+            <!-- Left Screen - Overflow Tool Bar -->
+            <m:OverflowToolbar 
+                id="leftScreenOverflowToolBar"
+                height="3rem">
+                <m:Title
+                    id="leftScreenToolBarTitle"
+                    text="Chats"
+                />
+                <m:ToolbarSpacer id="leftScreenToolBarSpacer" />
+                <m:Button
+                    id="leftScreenToolBarButton"
+                    icon="sap-icon://add"
+                    text="New chat"
+                    press=".onCreateNewChat"
+                />
+            </m:OverflowToolbar>
+
+            <!-- Left Screen - Chat List -->
+            <m:ScrollContainer
+                id="leftScreenScrollContainer"
+                vertical="true"
+                height="80%"
+                focusable="true">
+                <m:List
+                    id="leftScreenChatList"
+                    growing="true"
+                    growingThreshold="15"
+                    growingScrollToLoad="true"
+                    noDataText="No chat history available"
+                    enableBusyIndicator="true"
+                    items="{
+                            path:'/Conversation',
+                            sorter:{
+                                path:'last_update_time',
+                                descending: true
+                            }
+                        }"
+                    itemPress=".onConversationPress"
+                    mode="Delete"
+                    delete=".onHandleConversationDelete"
+                    >
+                    <m:StandardListItem
+                        id="_IDGenStandardListItem1"
+                        type="Navigation"
+                        title="{= ${title}.length > 0 ? ${title} : 'Local Testing'}"
+                        description="{userID} | {creation_time}"
+                    />
+                </m:List>
+            </m:ScrollContainer>
+
+            <tnt:NavigationList 
+                id="leftScreenNavigationList">
+                
+                <tnt:NavigationListItem
+                    id="leftScreenFileUploadBtn" 
+                    icon="sap-icon://upload"
+                    text="Upload Files"
+                    select=".onUploadFileBtnSelect"/>
+                <tnt:NavigationListItem
+                    id="leftScreenManageFilesBtn" 
+                    icon="sap-icon://collections-management"
+                    text="Manage Files" 
+                    select=".onManageFileBtnSelect"/>
+            </tnt:NavigationList>
+
+        </m:content>
+    </m:Page>
+</mvc:View>

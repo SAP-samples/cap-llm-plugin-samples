@@ -1,12 +1,3 @@
-**/@types
-edmx/
-default-env.json
-packages/messageBox
-reviews/msg-box
-reviews/db/test.db
-
-# added by cds
-.cdsrc-private.json
 _out
 *.db
 *.sqlite
@@ -17,12 +8,10 @@ gen/
 node_modules/
 target/
 build/
-.cdsrc.json
 
 # Web IDE, App Studio
 .che/
 .gen/
-package-lock.json
 
 # MTA
 *_mta_build_tmp
@@ -45,4 +34,4 @@ dist/
 
 # IDEs
 .vscode
-.eslintrc
+# .idea
