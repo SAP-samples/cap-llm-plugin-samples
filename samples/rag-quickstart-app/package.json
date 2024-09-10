@@ -52,14 +52,14 @@
       "gen-ai-hub": {
         "gpt-4": {
           "destinationName": "GenAIHubDestination",
-          "deploymentUrl": "/v2/inference/deployments/d31d046b4792cb52",
+          "deploymentUrl": "/v2/inference/deployments/{deploymentID  like d15b199f47cf6e11}",
           "resourceGroup": "default",
           "apiVersion": "2024-02-15-preview",
           "modelName": "gpt-4"
         },
         "text-embedding-ada-002": {
           "destinationName": "GenAIHubDestination",
-          "deploymentUrl": "/v2/inference/deployments/d71748a7711a7bb0",
+          "deploymentUrl": "/v2/inference/deployments/{deploymentID  like d15b199f47cf6e11}",
           "resourceGroup": "default",
           "apiVersion": "2024-02-15-preview",
           "modelName": "text-embedding-ada-002"

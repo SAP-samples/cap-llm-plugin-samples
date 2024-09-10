@@ -21,7 +21,8 @@ module.exports = function () {
             const { conversationId, messageId, message_time, user_id, user_query } = req.data;
             const { Conversation, Message } = this.entities;
             const capllmplugin = await cds.connect.to("cap-llm-plugin");
-
+            console.log("***********************************************************************************************\n");
+            console.log(`Received the request for RAG retrieval for the user query : ${user_query}\n`);
             /*
             For this sample use case we show how you can leverage the gpt model. However, you can easily customize this code to use any models supported by CAP LLM Plugin.
             Chat Model:  gpt-4 
@@ -32,7 +33,7 @@ module.exports = function () {
             const chatModelName = "gpt-4";
             const embeddingModelName = "text-embedding-ada-002";
 
-            
+            console.log(`Leveraing the following LLMs \n Chat Model:  gpt-4 \n Embedding Model: text-embedding-ada-002\n`);
             //Optional. handle memory before the RAG LLM call
             const memoryContext = await storeRetrieveMessages(conversationId, messageId, message_time, user_id, user_query, Conversation, Message, chatModelName);
 
@@ -50,6 +51,8 @@ module.exports = function () {
             - Construct the prompt based on the system instruction and similarity search
             - Call chat completion model to retrieve relevant answer to the user query
             */
+            console.log("Getting the RAG retrival response from the CAP LLM Plugin!");
+
             const chatRagResponse = await capllmplugin.getRagResponseWithConfig(
                 user_query,  //user query
                 tableName,   //table name containing the embeddings

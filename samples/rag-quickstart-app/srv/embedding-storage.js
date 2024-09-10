@@ -51,7 +51,7 @@ module.exports = function () {
       const { uuid } = req.data;
       const db = await cds.connect.to('db');
       const { Files, DocumentChunk } = this.entities;
-      const vectorplugin = await cds.connect.to("cap-llm-plugin");
+      const capllmplugin = await cds.connect.to("cap-llm-plugin");
       let textChunkEntries = [];
       const embeddingModelName = "text-embedding-ada-002";
 
@@ -66,8 +66,10 @@ module.exports = function () {
       // const stream = await db.run(SELECT('content').from(Files).where({ ID: uuid }));
       // //const stream = await db.stream(SELECT('content').from(Files).where({ ID: uuid }));
       const fileName = await (SELECT('fileName').from(Files).where({ ID: uuid }));
+      const fileNameString = fileName[0].fileName;
       const tempDocLocation = __dirname + `/${fileName[0].fileName}`;
-
+      console.log("***********************************************************************************************\n");
+      console.log(`Received the request to split the document ${fileNameString} and store it into SAP HANA Cloud!\n`);
       // Create a new PDF document
       const pdfDoc = await PDFDocument.create();
       const pdfBytes = [];
@@ -120,11 +122,11 @@ module.exports = function () {
       const textChunks = await splitter.splitDocuments(document);
       console.log(`Documents split into ${textChunks.length} chunks.`);
 
-      console.log("Generating the vector embeddings for the text chunks.");
+      console.log("Leveraging the CAP LLM plugin to generate the vector embeddings for the text chunks.\n");
       // For each text chunk generate the embeddings
       for (const chunk of textChunks) {
         const embeddingModelConfig = cds.env.requires["gen-ai-hub"][embeddingModelName];
-        const embeddingResult = await vectorplugin.getEmbeddingWithConfig(embeddingModelConfig, chunk.pageContent);
+        const embeddingResult = await capllmplugin.getEmbeddingWithConfig(embeddingModelConfig, chunk.pageContent);
         let embedding = null;
         //using Azure OpenAI's text-embedding-ada-002 model.
         
@@ -133,7 +135,7 @@ module.exports = function () {
         }
         //Parse the responses of other embedding models supported by the CAP LLM Plugin
         else{
-          throw new Error(`Embedding model ${embeddingModelName} not supported!`)
+          throw new Error(`Embedding model ${embeddingModelName} not supported!\n`)
         }
         const entry = {
           "text_chunk": chunk.pageContent,
@@ -143,13 +145,13 @@ module.exports = function () {
         textChunkEntries.push(entry);
       }
 
-      console.log("Inserting text chunks with embeddings into db.");
+      console.log("Inserting text chunks with embeddings into SAP HANA Cloud's vector engine!\n");
       // Insert the text chunk with embeddings into db
       const insertStatus = await INSERT.into(DocumentChunk).entries(textChunkEntries);
       if (!insertStatus) {
         throw new Error("Insertion of text chunks into db failed!");
       }
-
+      console.log(`RAG content generation for the document ${fileNameString} completed!\n`);
       // Delete temp document
       deleteIfExists(tempDocLocation);
 
