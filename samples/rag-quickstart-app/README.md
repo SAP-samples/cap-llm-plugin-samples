@@ -8,17 +8,22 @@ This quickstart sample CAP application showcases a RAG scenario where the user c
  
 1. [Create SAP AI Core service instance](https://help.sap.com/docs/sap-ai-core/sap-ai-core-service-guide/create-service-instance) and make sure to choose the service plan extended to activate Generative AI Hub and continue [creating a Service Key](https://help.sap.com/docs/sap-ai-core/sap-ai-core-service-guide/create-service-key). Take a note of the service key credentials.
  
-2. [Create model deployment in Generative AI Hub](https://help.sap.com/docs/sap-ai-core/sap-ai-core-service-guide/create-deployment-for-generative-ai-model-in-sap-ai-core) and take a note of the following parameters once the deployment is completed.
+2. Create model deployment in Generative AI Hub via [api](https://help.sap.com/docs/sap-ai-core/sap-ai-core-service-guide/create-deployment-for-generative-ai-model-in-sap-ai-core) or [ai-launchpad](https://developers.sap.com/tutorials/ai-core-generative-ai.html#7a5bec43-f286-4004-9b0b-6359199141da) and take a note of the following parameters once the deployment is completed.
 
 ```
-deploymentUrl 
-modelName
-resourceGroupId (you generally set this while creating the ai core instance)
+deploymentUrl which looks like https://api.ai.prod.***************.ml.hana.ondemand.com/v2/inference/deployments/d15b199f47cf6e11 where d15b199f47cf6e11 is the deploymentID.
+modelName like gpt-4
+resourceGroupId (you generally set this while creating the ai core instance) like default
 ```
 
 3. [Create SAP HANA Cloud service instance](https://developers.sap.com/tutorials/btp-app-hana-cloud-setup.html) with Vector Engine (QRC 1/2024 or later) in your BTP space.
 
-4. [Create a Destination within the destination service instance in the BTP space](https://help.sap.com/docs/btp/sap-business-technology-platform/create-destination) for Generative AI Hub in the SAP BTP Cockpit of your subaccount based on the Service Key of SAP AI Core you created previously:
+4. Create the destination within the destination service instance in the BTP space:
+
+- For Hybrid testing, you will have to [create a destination service instance - instructions found in step 3 of hybrid testing section](#hybrid-testing) and create the below destination within the destination service in your BTP space.
+- For BTP deployment, the destination service will be created for you in the BTP space, you will have to create the below destination within the created destination service instance with the name `rag-quick-start-app-destination-service`.
+
+Navigate to the space in the BTP cockpit, click on the destination service instance `rag-quick-start-app-destination-service` in the instances section. Click on 'Manage Instance button'. In the 'Destinations' section, click on 'Create Destination' and create the destination with the following parameters:
  
 ```
 Name: aicore-destination
@@ -37,10 +42,6 @@ HTML5.DynamicDestination: true
 
 ```
 
-- For Hybrid testing, you will have to [create a destination service instance](https://help.sap.com/docs/service-manager/sap-service-manager/creating-service-instances-in-cloud-foundry) with the name `rag-quick-start-app-destination-service` and create the above destination within the destination service in your BTP space.
-- For BTP deployment, the destination service will be created for you in the BTP space, you will have to create the above destination within the created destination service with the name `rag-quick-start-app-destination-service`.
-
- 
 5. Configure the Generative AI Hub model configuration in your CAP application:
  
 For example, in `package.json` file in your CAP application, configure the destination and model configurations as follows: 
@@ -51,14 +52,14 @@ For example, in `package.json` file in your CAP application, configure the desti
             "gen-ai-hub": {
                 "gpt-4": {
                   "destinationName": "GenAIHubDestination",
-                  "deploymentUrl": "/v2/inference/deployments/<deploymentUrl from step 2 like d15b199f47cf6e11>",
+                  "deploymentUrl": "/v2/inference/deployments/<deploymentID from the deploymentUrl from step 2 like d15b199f47cf6e11>",
                   "resourceGroup": "<resourcegroupId from step 2 like default>",  
                   "apiVersion": "<apiVersion of the respective model like 2024-02-15-preview. For api version go to [ai core models](https://help.sap.com/docs/sap-ai-core/sap-ai-core-service-guide/models-and-scenarios-in-generative-ai-hub) and navigate to the respective model page to look for api version.>",
                   "modelName": "<modelName from step 2 like gpt-4>" 
                 },
                   "text-embedding-ada-002": {
                     "destinationName": "GenAIHubDestination",
-                    "deploymentUrl": "/v2/inference/deployments/<deploymentid from the deployment url like d15b199f47cf6e11",
+                    "deploymentUrl": "/v2/inference/deployments/<deploymentID from the deploymentUrl from step 2 like d15b199f47cf6e11>",
                     "resourceGroup": "default",
                     "apiVersion": "2024-02-15-preview",
                     "modelName": "text-embedding-ada-002"
@@ -67,7 +68,7 @@ For example, in `package.json` file in your CAP application, configure the desti
             "GenAIHubDestination": {
                 "kind": "rest",
                 "credentials": {
-                  "destination": "<destiation-name-of-the-configured-destination>",
+                  "destination": "aicore-destination",
                   "requestTimeout": "300000"
                 }
               }
@@ -82,38 +83,37 @@ Refer the [documentation](https://help.sap.com/docs/sap-ai-core/sap-ai-core-serv
 
 ## Getting started
 
--   Clone this repo.      
--   Connect to subaccount using cf:      
+1.  Clone this repo.      
+2.  Connect to subaccount using cf:      
 ` cf api <subaccount-endpoint>`    
 ` cf login`   
 
-- Install node modules using `npm install --save`
+3. Install node modules using `npm install --save`
 
 ## Hybrid testing
 
-- Configure the UI to work for hybrid testing:
+1. Configure the UI to work for hybrid testing:
 
   In the `app/hr-approval-ui/webapp/controller/App.controller.js`, do the following change:
 
   ```
   sessionStorage.setItem("isDeployedVersion", "false");
   ```
-
-- Bind the following BTP services to the CAP application:
   
--  Create HDI container (HANA service instance) and bind it to the CAP pplication as follows:  
-  `cf create-service hana hdi-shared rag-quickstart-db`    
-  `cf create-service-key rag-quickstart-db  SharedDevKey`   
-  `cds bind -2  rag-quickstart-db:SharedDevKey`  
+2. Create HDI container (HANA service instance) and bind it to the CAP pplication as follows:  
+    `cf create-service hana hdi-shared rag-quickstart-db`    
+    `cf create-service-key rag-quickstart-db  SharedDevKey`   
+    `cds bind -2  rag-quickstart-db:SharedDevKey`  
 
--  Bind the previously created desination service to the CAP application as follows:  
-  `cf create-service-key rag-quick-start-app-destination-service SharedDevKey`  
-  `cds bind -2  rag-quick-start-app-destination-service:SharedDevKey`  
+3. Create and bind the destination service to the CAP application as follows (which you would have done in the pre-requisites section):    
+    `cf create-service destination lite rag-quick-start-app-destination-service`  
+    `cf create-service-key rag-quick-start-app-destination-service SharedDevKey`  
+    `cds bind -2  rag-quick-start-app-destination-service:SharedDevKey`  
 
-- Build the artifacts and deploy to SAP HANA Cloud:
+4. Build the artifacts and deploy to SAP HANA Cloud:
 
-`cds build --production`  
-`cds deploy --to hana:rag-quickstart-db`  
+    `cds build --production`  
+    `cds deploy --to hana:rag-quickstart-db`  
 
 - Build server and run application:
 `cds watch --profile hybrid`
@@ -127,7 +127,7 @@ password: initial
 
 ## Deploy on SAP BTP:
 
-- Configure the UI to work in BTP:
+1. Configure the UI to work in BTP:
 
   In the `app/hr-approval-ui/webapp/controller/App.controller.js`, do the following change:
 
@@ -135,11 +135,11 @@ password: initial
   sessionStorage.setItem("isDeployedVersion", "true");
   ```
 
-- Run the following command to deploy server:
+2. Run the following command to deploy server:
 
 `cds build --production`
 
-- Build and deploy mtar
+3. Build and deploy mtar
 
 ```
 mbt build
@@ -157,7 +157,7 @@ cf deploy mta_archives/<mtar_filename>
 
 ```
         "gemini-1.0-pro": {
-          "destinationName": "AICoreAzureOpenAIDestination",
+          "destinationName": "GenAIHubDestination",
           "deploymentUrl": "/v2/inference/deployments/{DEPLOYMENT_ID like d42ed73b0a6a3333}",
           "resourceGroup": "default",
           "apiVersion": "001",
