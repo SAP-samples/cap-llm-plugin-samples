@@ -17,7 +17,6 @@ gen/
 node_modules/
 target/
 build/
-.cdsrc.json
 
 # Web IDE, App Studio
 .che/
