@@ -40,7 +40,7 @@ For sample use cases leveraging CAP LLM Plugin, refer to [Samples](./samples/).
 
 
 ## How to obtain support
-[Create an issue](https://github.com/SAP-samples/<repository-name>/issues) in this repository if you find a bug from the plugin.
+[Create an issue](https://github.com/SAP-samples/cap-llm-plugin-samples/issues) in this repository if you find a bug from the plugin.
  
 For other support, [ask a question in SAP Community](https://answers.sap.com/questions/ask.html).
 
