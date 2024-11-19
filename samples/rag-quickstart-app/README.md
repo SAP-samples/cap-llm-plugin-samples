@@ -10,12 +10,17 @@ Note: For any issues, please feel free to raise a new issue in the "Issues" sect
  
 1. <a href="https://help.sap.com/docs/sap-ai-core/sap-ai-core-service-guide/create-service-instance" target="_blank">Create SAP AI Core service instance</a> and make sure to choose the service plan extended to activate Generative AI Hub and continue [creating a Service Key](https://help.sap.com/docs/sap-ai-core/sap-ai-core-service-guide/create-service-key). Take a note of the service key credentials.
  
-2. Create model deployment in Generative AI Hub via <a href="https://help.sap.com/docs/sap-ai-core/sap-ai-core-service-guide/create-deployment-for-generative-ai-model-in-sap-ai-core" target="_blank">api</a>
+2. Create model deployments for both Chat and Embedding models in Generative AI Hub via <a href="https://help.sap.com/docs/sap-ai-core/sap-ai-core-service-guide/create-deployment-for-generative-ai-model-in-sap-ai-core" target="_blank">api</a>
  or <a href="https://developers.sap.com/tutorials/ai-core-generative-ai.html#7a5bec43-f286-4004-9b0b-6359199141da" target="_blank">ai-launchpad</a> and take a note of the following parameters once the deployment is completed.
 
 ```
 deploymentUrl which looks like https://api.ai.prod.***************.ml.hana.ondemand.com/v2/inference/deployments/d15b199f47cf6e11 where d15b199f47cf6e11 is the deploymentID.
 modelName like gpt-4
+resourceGroupId (you generally set this while creating the ai core instance) like default
+```
+```
+deploymentUrl which looks like https://api.ai.prod.***************.ml.hana.ondemand.com/v2/inference/deployments/d15b199f47cf6e11 where d15b199f47cf6e11 is the deploymentID.
+modelName like text-embedding-ada-002
 resourceGroupId (you generally set this while creating the ai core instance) like default
 ```
 
