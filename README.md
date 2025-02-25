@@ -1,3 +1,6 @@
+[![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/cap-llm-plugin-samples)](https://api.reuse.software/info/github.com/SAP-samples/cap-llm-plugin-samples)
+
+
 # CAP LLM Plugin
 
 CAP LLM Plugin helps developers create tailored Generative AI based CAP applications:
