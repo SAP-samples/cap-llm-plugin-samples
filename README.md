@@ -10,6 +10,7 @@ CAP LLM Plugin helps developers create tailored Generative AI based CAP applicat
 3. Easily retrieve Chat Completion response via SAP AI Core.
 4. Effortlessly perform similarity search via SAP HANA Cloud Vector engine.
 5. Simplified single RAG (retrieval-augmented generation) retrieval method powered by SAP AI Core and SAP HANA Cloud Vector Engine.
+6. Access the harmonized chat completion API of the SAP AI Core Orchestration service.
 
 ## Architecture 
 
@@ -31,6 +32,7 @@ CAP LLM Plugin helps developers create tailored Generative AI based CAP applicat
 |  Similarity search  |  Leverage the SAP HANA Cloud's Vector engine to perform similarity search via CAP LLM Plugin |  
 |  Chat LLM Access via SAP AI Core |   Simple access to LLM models via SAP AI Core with simplified method for chat completion |  
 |  Streamlining RAG retrieval  |   Single method to streamline the entire RAG retrieval process leveraging SAP AI Core and SAP HANA Cloud Vector Engine |
+|  :new: Orchestration Service Support | Support for SAP AI Core orchestration service's harmonized chat completion APIs
 
 
 ## 📚 Samples and documentation

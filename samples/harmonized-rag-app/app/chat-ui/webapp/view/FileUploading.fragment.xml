@@ -1,0 +1,68 @@
+<core:FragmentDefinition 
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:m="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m.upload"
+>
+<m:Dialog
+    id="fileUploadFragment"
+    title="Upload Files">
+
+    <UploadSet 
+        id="uploadSet"
+        instantUpload="false"
+        uploadEnabled="true"
+        showIcons="true"
+        terminationEnabled="true"
+        maxFileNameLength="30"
+        maxFileSize="200"
+        fileTypes="pdf"
+        mediaTypes="application/pdf"
+        afterItemAdded=".onAfterItemAdded"
+        uploadCompleted=".onUploadCompleted"
+        mode="None"	
+        items="{ 
+            path:'files>/Files',
+            parameters: {
+                $orderby: 'createdAt desc'
+			},
+			templateShareable: false
+         }">
+         <items>
+            <UploadSetItem 
+                id="uploadSetItems"
+                fileName="{files>fileName}"
+                mediaType="{files>mediaType}"
+                enabledEdit="false"
+                visibleEdit="false"
+                enabledRemove="false"
+                visibleRemove="false"
+                >
+                <m:ObjectAttribute
+                    id="uploadSetItemAttribute1" 
+                    title="Uploaded By"
+					text="{files>createdBy}"
+					active="false"/>
+                <m:ObjectAttribute
+                    id="uploadSetItemAttribute2" 
+					title="Uploaded on"
+					text="{files>createdAt}"
+					active="false"/>
+				<m:ObjectAttribute
+                    id="uploadSetItemAttribute3" 
+					title="File Size"
+					text="{files>size}"
+					active="false"/>
+            </UploadSetItem>
+         </items>
+    </UploadSet>
+    
+    <m:beginButton>
+        <m:Button
+            id="closeBtn"
+            text="Close"
+            press=".onCloseUploadFileFragment"/>
+        </m:beginButton>
+</m:Dialog>
+    
+</core:FragmentDefinition>

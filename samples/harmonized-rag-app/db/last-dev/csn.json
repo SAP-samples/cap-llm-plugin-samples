@@ -1,0 +1,9 @@
+{
+  "namespace": "sap.tisce.demo",
+  "definitions": {},
+  "meta": {
+    "creator": "CDS Compiler v4.9.8",
+    "build": "CDS Build v7.9.5"
+  },
+  "$version": "2.0"
+}

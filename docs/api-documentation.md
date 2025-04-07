@@ -1,53 +1,53 @@
 ## CAP LLM Plugin class methods
-
+ 
 Use any of the following class methods:
-
+ 
 ### `async getAnonymizedData(entityName, [sequenceIds=[]])`
-
+ 
 Retrieve anonymized data for a given entity.
-
+ 
 ### Parameters
-
+ 
 - `entityName` (string): Name of the entity.
 - `sequenceIds` (array, optional): Sequence IDs of the entity to retrieve the data. Default is an empty array.
-
+ 
 ### Returns
-
+ 
 - (object): The retrieved anonymized data.
-
+ 
 ### Example
-
+ 
 ```
 const anonymizer = await cds.connect.to("cap-llm-plugin");
 let response = await anonymizer.getAnonymizedData("EmployeeService.Employee",[1001])
 ```
-
+ 
 Refer the [doc](./anonymization-usage.md) for more details.
-
-
-
+ 
+ 
+ 
 ### `async getEmbeddingWithConfig(config, input)`
-
+ 
 Retrieve the vector embeddings.
-
+ 
 Currently the following models are supported:
-
+ 
 ```
 Executable ID: azure-openai
 Model Name: "text-embedding-ada-002", "text-embedding-3-small", "text-embedding-3-large"
 ```
-
+ 
 Refer the [SAP AI Core documentation](https://help.sap.com/docs/sap-ai-core/sap-ai-core-service-guide/models-and-scenarios-in-generative-ai-hub) for more details.
-
+ 
 The config(for all the methods that require a config parameter) would be a json object like the following in your package.json file. As you can see, multiple models are supported:
-
+ 
 ```
   "cds": {
     "requires": {
       "gen-ai-hub": {
         "text-embedding-ada-002": {
           "destinationName": "AICoreAzureOpenAIDestination",
-          "deploymentUrl": "/v2/inference/deployments/{DEPLOYMENT_ID like d42ed73b0a6a3333}",
+          "deploymentUrl": "/v2/inference/deployments/{DEPLOYMENT_ID like d42ed24dd3abc8a7}",
           "resourceGroup": "default",
           "apiVersion": "2024-02-15-preview",
           "modelName": "text-embedding-ada-002"
@@ -56,84 +56,84 @@ The config(for all the methods that require a config parameter) would be a json 
     }
   }
 ```
-
+ 
 ### Parameters
-
+ 
 - `config` (object): The configuration for the embedding model.
 - `input` (string): The input string to be embedded.
-
+ 
 ### Returns
-
+ 
 - (object): Returns the vector embeddings. The complete response returned by the respective embedding model.
-
+ 
 ### Example:
-
+ 
 ```
 const vectorplugin = await cds.connect.to("cap-llm-plugin");
 const embeddingModelConfig = cds.env.requires["gen-ai-hub"]["text-embedding-ada-002"];
 const embeddingGenResp = await vectorplugin.getEmbeddingWithConfig(embeddingModelConfig, user_query);
 const vector_embedding = embeddingGenResp?.data[0]?.embedding;
 ```
-
+ 
 ---
-
+ 
 ### `async getChatCompletionWithConfig(config, payload)`
-
+ 
 Retrieve the chat completion response.
-
+ 
 Currently the following models are supported:
-
+ 
 ```
 Executable ID: azure-openai
 Model Name: "gpt-4", "gpt-4o", "gpt-4-32k", "gpt-35-turbo-16k", "gpt-35-turbo"
-
+ 
 Executable ID: gcp-vertexai
 Model Name: gemini-1.0-pro
-
+ 
 Executable ID: aws-bedrock
 Model Name: "anthropic--claude-3-sonnet", "anthropic--claude-3-haiku", "anthropic--claude-3-opus", "anthropic--claude-3.5-sonnet"
-
+ 
 ```
-
+ 
 Refer the [SAP AI Core documentation](https://help.sap.com/docs/sap-ai-core/sap-ai-core-service-guide/models-and-scenarios-in-generative-ai-hub) for more details.
-
+ 
 The config(for all the methods that require a config parameter) would be a json object like the following in your package.json file. As you can see, multiple models are supported:
-
+ 
 ```
   "cds": {
     "requires": {
       "gen-ai-hub": {
         "gpt-4": {
           "destinationName": "AICoreAzureOpenAIDestination",
-          "deploymentUrl": "/v2/inference/deployments/{DEPLOYMENT_ID like d42ed73b0a6a3333}",
+          "deploymentUrl": "/v2/inference/deployments/{DEPLOYMENT_ID like d42ed24dd3abc8a7}",
           "resourceGroup": "default",
           "apiVersion": "2024-02-15-preview",
           "modelName": "gpt-4"
         },
         "gpt-4o": {
           "destinationName": "AICoreAzureOpenAIDestination",
-          "deploymentUrl": "/v2/inference/deployments/{DEPLOYMENT_ID like d42ed73b0a6a3333}",
+          "deploymentUrl": "/v2/inference/deployments/{DEPLOYMENT_ID like d42ed24dd3abc8a7}",
           "resourceGroup": "default",
           "apiVersion": "2024-02-15-preview",
           "modelName": "gpt-4o"
         },
         "text-embedding-ada-002": {
           "destinationName": "AICoreAzureOpenAIDestination",
-          "deploymentUrl": "/v2/inference/deployments/{DEPLOYMENT_ID like d42ed73b0a6a3333}",
+          "deploymentUrl": "/v2/inference/deployments/{DEPLOYMENT_ID like d42ed24dd3abc8a7}",
           "resourceGroup": "default",
           "apiVersion": "2024-02-15-preview",
           "modelName": "text-embedding-ada-002"
         },
         "gemini-1.0-pro": {
           "destinationName": "AICoreAzureOpenAIDestination",
-          "deploymentUrl": "/v2/inference/deployments/{DEPLOYMENT_ID like d42ed73b0a6a3333}",
+          "deploymentUrl": "/v2/inference/deployments/{DEPLOYMENT_ID like d42ed24dd3abc8a7}",
           "resourceGroup": "default",
           "apiVersion": "001",
           "modelName": "gemini-1.0-pro"
         },
          "anthropic--claude-3-sonnet": {
           "destinationName": "GenAIHubDestination",
-          "deploymentUrl": "/v2/inference/deployments/d3ba5e081a658475",
+          "deploymentUrl": "/v2/inference/deployments/d42ed24dd3abc8a7",
           "resourceGroup": "default",
           "anthropic_version": "bedrock-2023-05-31",
           "max_tokens": 4096,
@@ -144,36 +144,36 @@ The config(for all the methods that require a config parameter) would be a json 
     }
   }
 ```
-
+ 
 ### Parameters
 - `config` (object): The configuration for the model.
 - `payload` (object): The payload for the specific chat completion model.
-
+ 
 ### Returns
-
+ 
 - (object): The chat completion results from the model. The complete chat completion response by the respective model.
-
+ 
 ---
-
+ 
 ### Example:
-
+ 
 ```
 /*
 Some chat models require mandatory chat parameters in the payload to be passed. Please refer to the model documentation for more details. For instance, AWS claude models requires 'anthropic_version' and 'max_tokens', so you will need to pass the parameters in the payload body.
 */
-
+ 
 const chatModelConfig = cds.env.requires["gen-ai-hub"][{modelType like gemini-1.0-pro | anthropic--claude-3-sonnet | gpt-4 }];
 const vectorplugin = await cds.connect.to("cap-llm-plugin");
 let result = await vectorplugin.getChatCompletionWithConfig(chatModelConfig, payload);
-
+ 
 ```
-
+ 
 ### `async getRagResponseWithConfig(input, tableName, embeddingColumnName, contentColumn, chatInstruction, context, [topK=3], [algoName='COSINE_SIMILARITY'], [chatParams], embeddingConfig, chatConfig)`
-
+ 
 Retrieve RAG (retrival-agumented generation) response from LLM.
-
+ 
 ### Parameters
-
+ 
 - `input` (string): User input.
 - `tableName` (string): The full name of the SAP HANA Cloud table which contains the vector embeddings.
 - `embeddingColumnName` (string): The full name of the SAP HANA Cloud table column which contains the embeddings.
@@ -185,18 +185,18 @@ Retrieve RAG (retrival-agumented generation) response from LLM.
 - `topK` (number, optional): The number of the entries you want to return. Default value is 3.
 - `algoName` (string, optional): The algorithm of similarity search. Currently only COSINE_SIMILARITY and L2DISTANCE are accepted. The default is 'COSINE_SIMILARITY'.
 - `chatParams` (object, optional): The other chat model params.
-
-
+ 
+ 
 ### Returns
-
+ 
 - (object): Returns the RAG response from the LLM in the form of {
         "completion": chat completion response from getChatCompletionWithConfig method,
         "additionalContents": complete similarity search results from SAP HANA Cloud,
       }
-
-
+ 
+ 
 ### Example:
-
+ 
 ```
 const vectorplugin = await cds.connect.to("cap-llm-plugin");
 const embeddingModelConfig = cds.env.requires["gen-ai-hub"]["text-embedding-ada-002"];
@@ -204,12 +204,12 @@ const embeddingModelConfig = cds.env.requires["gen-ai-hub"]["text-embedding-ada-
 const chatModelConfig = cds.env.requires["gen-ai-hub"][{modelType like gemini-1.0-pro | anthropic--claude-3-sonnet | gpt-4 }];
 /*
 Some chat models require mandatory chatParams to be passed. Please refer to the model documentation for more details. For instance, AWS claude models requires 'anthropic_version' and 'max_tokens', so you will need to pass the chatParams as follows:
-const chatParams = chatModelConfig?.modelName === "anthropic--claude-3-sonnet" ? { 
+const chatParams = chatModelConfig?.modelName === "anthropic--claude-3-sonnet" ? {
                  anthropic_version: chatModelConfig?.anthropic_version,
                  max_tokens: chatModelConfig?.max_tokens
                 } : undefined;
 */
-
+ 
 const chatRagResponse = await vectorplugin.getRagResponseWithConfig(
    '<user_input>', //user query
     '<table_name>',  //table name containing the embeddings
@@ -223,82 +223,82 @@ const chatRagResponse = await vectorplugin.getRagResponseWithConfig(
     "COSINE_SIMILARITY", //Optional. Defaults to 'COSINE_SIMILARITY',
     <chatParams or none> //Optional. Additional chat parameters for the chat model. Pass the above chatParams for AWS anthropic models.
 );
-
+ 
 ```
-
-
+ 
+ 
 ### `async similaritySearch(tableName, embeddingColumnName, contentColumn, embedding, algoName, topK)`
-
+ 
 Perform Similarity Search.
-
+ 
 ### Parameters
-
+ 
 - `tableName` (string): The full name of the SAP HANA Cloud table which contains the vector embeddings.
 - `embeddingColumnName` (string): The full name of the SAP HANA Cloud table column which contains the embeddings.
 - `contentColumn` (string): The full name of the SAP HANA Cloud table column which contains the page content.
 - `embedding` (number[]): The input query embedding for similarity search.
 - `algoName` (string): The algorithm of similarity search. Currently only COSINE_SIMILARITY and L2DISTANCE are accepted.
 - `topK` (number): The number of entries you want to return.
-
+ 
 ### Returns
-
+ 
 - (object): The highest matched entries from DB.
-
+ 
 ### Example:
-
+ 
 ```
 const vectorplugin = await cds.connect.to("cap-llm-plugin");
 const similaritySearchResults = vectorplugin.similaritySearch(
-    '<table_name>', 
-    '<embedding_column_name>', 
-    'page_content_column_name>', 
-    '<user_query_embeddings_from_embedding_model. Use getEmbedding method for generating the user embedding.>', 
-    "L2DISTANCE", 
+    '<table_name>',
+    '<embedding_column_name>',
+    'page_content_column_name>',
+    '<user_query_embeddings_from_embedding_model. Use getEmbedding method for generating the user embedding.>',
+    "L2DISTANCE",
     2);
 ```
-
+ 
 ### `async getEmbedding(input)`
-
+ 
 Note: This method is for backward compatibilty. This method just supports Azure OpenAI embedding model. Use the `getEmbeddingWithConfig` method instead.
-
+ 
 Retrieve vector embeddings.
-
+ 
 ### Parameters
-
+ 
 - `input` (string): The input string to be embedded.
-
+ 
 ### Returns
-
+ 
 - (object): Returns the vector embeddings.
-
+ 
 ### Example:
-
+ 
 ```
 const input = "<user_input>";
 const vectorplugin = await cds.connect.to("cap-llm-plugin");
 let result = await vectorplugin.getEmbedding(<input_query>);
 ```
-
+ 
 ---
-
+ 
 ### `async getChatCompletion(payload)`
-
+ 
 Note: This method is for backward compatibilty. This method just supports Azure OpenAI chat model. Use the `getChatCompletionWithConfig` method instead.
-
+ 
 Retrieve chat completion response.
-
+ 
 ### Parameters
-
+ 
 - `payload` (object): The payload for the chat completion model.
-
+ 
 ### Returns
-
+ 
 - (object): The chat completion results from the model.
-
+ 
 ---
-
+ 
 ### Example:
-
+ 
 ```
 const summaryPrompt = {
   "messages": [
@@ -311,15 +311,15 @@ const summaryPrompt = {
 const vectorplugin = await cds.connect.to("cap-llm-plugin");
 let result = await vectorplugin.getChatCompletion(summaryPrompt);
 ```
-
+ 
 ### `async getRagResponse(input, tableName, embeddingColumnName, contentColumn, chatInstruction, context, [topK=3], [algoName='COSINE_SIMILARITY'], [chatParams])`
-
+ 
 Note: This method is for backward compatibilty. This method just supports Azure OpenAI chat model. Use the `getRagResponseWithConfig` method instead.
-
+ 
 Retrieve RAG (retrival-agumented generation) response from LLM.
-
+ 
 ### Parameters
-
+ 
 - `input` (string): User input.
 - `tableName` (string): The full name of the SAP HANA Cloud table which contains the vector embeddings.
 - `embeddingColumnName` (string): The full name of the SAP HANA Cloud table column which contains the embeddings.
@@ -329,23 +329,142 @@ Retrieve RAG (retrival-agumented generation) response from LLM.
 - `topK` (number, optional): The number of the entries you want to return. Default value is 3.
 - `algoName` (string, optional): The algorithm of similarity search. Currently only COSINE_SIMILARITY and L2DISTANCE are accepted. The default is 'COSINE_SIMILARITY'.
 - `chatParams` (object, optional): The other chat model params.
-
+ 
 ### Returns
-
+ 
 - (object): Returns the RAG response from the LLM.
-
-
+ 
+ 
 ### Example:
-
+ 
 ```
 const vectorplugin = await cds.connect.to("cap-llm-plugin");
 const chatRagResponse = await vectorplugin.getRagResponse(
     '<user_input>',
-    '<table_name>', 
-    '<embedding_column_name>', 
-    '<page_content_column_name>', 
+    '<table_name>',
+    '<embedding_column_name>',
+    '<page_content_column_name>',
     'You are a chatbot. Answer the user question based only on the context, delimited by triple backticks\n '
 );
 ```
-
-
+### SAP AI Core Orchestration Service Abstract Methods:
+ 
+### Prerequisite
+ 
+- Before using these methods, ensure you meet the [prerequisites](https://www.npmjs.com/package/@sap-ai-sdk/orchestration#prerequisites).
+ 
+- Bind the SAP AI Core service instance to your CAP application as follows:
+  
+  - For hybrid testing, run the following command:
+  ```   
+    cf create-service-key <ai-core-service-instance-name> <ai-core-service-instance-name-key-name>   
+    cds bind -2 <ai-core-service-instance-name>:<ai-core-service-instance-name-key-name>    
+  ```   
+ 
+  - For deployment to BTP, add the SAP AI Core service instance as a depenedency to the application srv as follows:
+ 
+    - Under the resources section, include the SAP AI Core service instance:
+ 
+    ```
+    - name: <ai-core-service-instance-name>
+    # ------------------------------------------------------------
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: aicore
+      service-name: <ai-core-service-instance-name>
+      service-plan: extended
+    ```
+ 
+    - Add the service instance as a dependency to the srv:
+ 
+    The service instance has been added to a sample application as shown below:
+ 
+    ```
+    - name: rag-quick-start-app-srv
+    # -------------------------------------------------------------
+    type: nodejs
+    path: gen/srv
+    requires:
+      - name: rag-quick-start-app-auth
+      - name: rag-quick-start-app-db
+      - name: rag-quick-start-app-destination-service
+      - name: <ai-core-service-instance-name>
+    ```
+ 
+### `async getHarmonizedChatCompletion({ clientConfig, chatCompletionConfig, getContent = false, getTokenUsage = false, getFinishReason = false })`
+ 
+This method retrieves the harmonized chat completion response from generative AI models supported by orchestration service.
+ 
+#### Parameters
+ 
+- `clientConfig` (object): The configuration for initializing the OrchestrationClient. For more details, refer to the [guide](https://www.npmjs.com/package/@sap-ai-sdk/orchestration#usage)
+- `chatCompletionConfig` (object): The configuration for the chat completion request. For more details, refer to the [guide](https://www.npmjs.com/package/@sap-ai-sdk/orchestration#usage)
+- `getContent` (boolean, optional): If true, returns only the content from the response. Default is false, returns the complete response payload.
+- `getTokenUsage` (boolean, optional): If true, returns only the token usage details from the response. Default is false.
+- `getFinishReason` (boolean, optional): If true, returns only the finish reason from the response. Default is false.
+ 
+ 
+#### Returns
+ 
+- (object): The chat completion response.
+ 
+ 
+#### Example
+ 
+ 
+```
+const systemPrompt =
+    ` You are an helpful assistant who answers the user question\n
+`;
+ 
+const clientConfig = {
+        llm: {
+          model_name: 'gpt-4',
+          model_params: { max_tokens: 50, temperature: 0.1 }
+        },
+        templating: {
+          template: [
+          { role: 'system', content: `${systemPrompt}` },
+          { role: 'user', content:  '{{?query}}?'}
+          ]
+        }
+      };
+ 
+    const chatCompletionConfig = {
+        inputParams: { query }
+      };
+ 
+    const capllmplugin = await cds.connect.to("cap-llm-plugin");
+    const chatResponse = await capllmplugin.getHarmonizedChatCompletion({
+        clientConfig,
+        chatCompletionConfig,
+        getContent: true // Retrieve only the content
+    });
+```
+ 
+---
+ 
+### `async getContentFilters({ type, config })`
+ 
+This method applies filtering to restrict content that is passed to and received from a generative AI model. This function currently supports 'azure' as the valid type (only Azure OpenAI models are supported).
+ 
+#### Parameters
+ 
+- `type` (string): The type of content filter. Currently, only 'azure' is supported.
+- `config` (object): The configuration object needed to build the content filter. For more details, refer [guide](https://www.npmjs.com/package/@sap-ai-sdk/orchestration#content-filtering)
+ 
+#### Returns
+ 
+- (object): The content filter object.
+ 
+ 
+#### Example
+ 
+```
+    const filterConfig = {
+        Hate: 'ALLOW_SAFE_LOW',
+        Violence: 'ALLOW_SAFE_LOW_MEDIUM'
+      }
+    const type = "azure";
+    const filter = await capllmplugin.getContentFilters({type,filterConfig});
+```
