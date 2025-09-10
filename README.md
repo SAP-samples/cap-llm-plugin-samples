@@ -43,6 +43,14 @@ For how to use Anonymization with CAP LLM plugin, refer the [anonymization-usage
 
 For sample use cases leveraging CAP LLM Plugin, refer to [Samples](./samples/).
 
+## 👉 Guidance : 
+When to use the SAP Cloud SDK for AI vs. the CAP LLM Plugin?
+
+| **SAP Cloud SDK for AI** | **CAP LLM Plugin** |
+|--------------------------|---------------------|
+| [**SAP Cloud SDK for AI**](https://help.sap.com/docs/sap-ai-core/sap-ai-core-service-guide/libraries-and-sdks) is the official SDK for SAP AI Core, generative AI hub, and orchestration. This is the recommended AI SDK for customers and partners. | [**CAP LLM Plugin**](https://github.com/SAP-samples/cap-llm-plugin-samples) is an open source community plugin for simplifying the development of SAP CAP applications. |
+| - This SDK offers enterprise-grade integration with SAP AI Core and related GenAI platform services.<br>- Use this for all productive use cases requiring LLM access, chat completion, content filtering, grounding, data masking, orchestration, type safety, and business AI compliance.<br>- SDK has support for Java, JavaScript/TypeScript and Python.<br>- Fully endorsed and maintained by SAP for integration with SAP AI Core and related services. | - The plugin is not an official SAP product. It is released under the Apache 2.0 license and is published as a community contribution.<br>- Targeted for RAG-based CAP applications leveraging SAP HANA Cloud's [vector engine capabilities](https://help.sap.com/docs/hana-cloud-database/sap-hana-cloud-sap-hana-database-vector-engine-guide/introduction?locale=en-US) and [anonymization capabilities](https://help.sap.com/docs/SAP_HANA_PLATFORM/b3ee5778bc2e4a089d3299b82ec762a7/6cf9d55f4d3d45b0bcdb41756d86629f.html?locale=en-US) through annotations in SAP CAP applications.<br>- Supports Node.js and can be used for rapid prototyping of CAP-based RAG applications. |
+| **Resource:** [SAP CLoud SDK for AI](https://help.sap.com/docs/sap-ai-core/sap-ai-core-service-guide/libraries-and-sdks) | **Resource:** [CAP LLM Plugin](https://github.com/SAP-samples/cap-llm-plugin-samples) |
 
 ## How to obtain support
 [Create an issue](https://github.com/SAP-samples/cap-llm-plugin-samples/issues) in this repository if you find a bug from the plugin.
